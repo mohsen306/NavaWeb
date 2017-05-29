@@ -1,0 +1,15 @@
+<div dir="rtl">
+<img src={{ album.album_logo }}>
+<h1>{{ album.album_title }}</h1>
+<h3>{{ album.album_artist }}</h3>
+<h3>{{ album.album_genre }}</h3>
+<ul>
+  {% if album.song_set.all %}
+    {% for song in album.song_set.all %}
+    <li>{{song.file_name}}-{{song.file_type}}</li>
+    {% endfor %}
+  {% else %}
+    <p>هیچ فایلی برای آلبوم وارد نشده است.</p>
+  {% endif %}
+</ul>
+</div>

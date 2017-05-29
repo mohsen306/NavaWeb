@@ -1,0 +1,9 @@
+{% if all_albums %}
+  <ul dir='rtl'>
+    {% for album in all_albums %}
+    <li><a href="{% url 'detail' album.id %}">{{ album.album_title }} - {{ album.album_artist }}</a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <h3>no album</h3>
+{% endif %}
