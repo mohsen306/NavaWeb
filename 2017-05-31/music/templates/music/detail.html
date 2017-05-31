@@ -1,0 +1,23 @@
+<div dir="rtl">
+<img src={{ album.album_logo }}>
+<h1>{{ album.album_title }}</h1>
+<h3>{{ album.album_artist }}</h3>
+<h3>{{ album.album_genre }}</h3>
+{% if error_message %}
+  <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+</div>
+<form action={% url 'music:favorite' album.id %} method="post">
+  {% csrf_token %}
+  {% for song in album.song_set.all %}
+      <input type="radio" id="song{{ forloop.counter }}" name="song" value = {{ song.id }} />
+      <label for="song{{ forloop.counter }}">
+        {{ song.file_name }}
+        {% if song.is_favorite %}
+            <img src="http://files.softicons.com/download/game-icons/world-of-goo-icons-by-sirubico/png/16x16/Favorites.png"/>
+        {% endif %}
+      </label><br/>
+      {% endfor %}
+      <input type="submit" value="Favorite"/>
+</form>
