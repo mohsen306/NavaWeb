@@ -1,0 +1,17 @@
+<!-- inja tamame filehaye staticam ro load mikonam -->
+{% extends 'music/base.html' %}
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+      <div class="list-group">
+    {% if object_list %}
+
+        {% for album in object_list %}
+        <a href="{% url 'music:detail' album.id %}" class="list-group-item">{{ album.album_title }} - {{ album.album_artist }}</a>
+        {% endfor %}
+
+    {% else %}
+      <h3>no album</h3>
+    {% endif %}
+     </div></div>
+ {% endblock %}

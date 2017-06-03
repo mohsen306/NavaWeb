@@ -1,0 +1,88 @@
+{% extends 'music/base.html' %}
+{% block title %}.::جزئیات آلبوم::.{% endblock %}
+{% block content %}
+
+      <div class="container-fluid songs-container">
+
+      <div class="row">
+
+          <!-- Left Album Info -->
+          <div class="col-sm-4 col-md-3 rtl">
+              <div class="panel panel-default rtl">
+                  <div class="panel-body rtl">
+                      <a href="{% url 'music:detail' album.id %}">
+                          {% if album.album_logo %}
+                              <img src="{{ album.album_logo }}" class="img-responsive">
+                          {% else %}
+                              <h3>No image to display</h3>
+                          {% endif %}
+                      </a>
+                      <h1>{{ album.album_title }} <small>{{ album.album_genre }}</small></h1>
+                      <h2>{{ album.album_artist }}</h2>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Right Song Info -->
+          <div class="col-sm-8 col-md-9 rtl">
+
+              <ul class="nav nav-pills rtl" style="margin-bottom: 10px;">
+                  <li role="presentation" class="active"><a href="{% url 'music:detail' album.id %}">نمایش همه</a></li>
+                  <li role="presentation"><a href="#">افزودن قطعه ای جدید</a></li>
+              </ul>
+
+              <div class="panel panel-default rtl">
+                  <div class="panel-body rtl">
+
+                      <h3>.::تمام قطعات موسیقی::.</h3>
+
+                      {% if error_message %}
+                          <p><strong>{{ error_message }}</strong></p>
+                      {% endif %}
+
+                      <table class="table rtl" dir="rtl">
+                          <thead>
+                          <tr>
+                              <th>عنوان قطعه</th>
+                              <th>فایل صوتی</th>
+                              <th>محبوبیت</th>
+                              <th>فرآیند</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          {% for song in album.song_set.all %}
+                              <tr>
+                                  <td>{{ song.file_name }}</td>
+                                  <td>
+                                      <a target="_blank" href="{{ song.audio_file.url }}">
+                                          <button type="button" class="btn btn-success btn-xs">
+                                              <span class="glyphicon glyphicon-play"></span>&nbsp; پخش قطعه
+                                          </button>
+                                      </a>
+                                  </td>
+                                  <td>
+
+                                  </td>
+                                  <td>
+                                      <form action="#" method="post" style="display: inline;">
+                                          {% csrf_token %}
+                                          <input type="hidden" name="song_id" value="{{ song.id }}" />
+                                          <button type="submit" class="btn btn-danger btn-xs">
+                                              <span class="glyphicon glyphicon-remove"></span>&nbsp; حذف قطعه
+                                          </button>
+                                      </form>
+                                  </td>
+                              </tr>
+                          {% endfor %}
+                          </tbody>
+                      </table>
+
+                  </div>
+              </div>
+
+          </div>
+
+      </div>
+
+  </div>
+ {% endblock %}
